@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flappy_app/bird.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +14,10 @@ class _HomePageState extends State<HomePage> {
   double yAxis = 0;
 
   void jump() {
-    setState(() {
-      yAxis -= 0.1;
+    Timer.periodic(Duration(milliseconds: 100), (timer) {
+      setState(() {
+        yAxis -= 0.1;
+      });
     });
   }
 
