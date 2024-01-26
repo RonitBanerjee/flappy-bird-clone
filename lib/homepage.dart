@@ -27,9 +27,10 @@ class _HomePageState extends State<HomePage> {
 
   void startGame() {
     gameHasStarted = true;
-    Timer.periodic(Duration(milliseconds: 100), (timer) {
+    Timer.periodic(const Duration(milliseconds: 100), (timer) {
       time += 0.05;
-      height = -4.9 * (time * time) + 2 * time; //derived from parabola (h = - gt^2 / 2 + vt)
+      height = -4.9 * (time * time) +
+          2 * time; //derived from parabola (h = - gt^2 / 2 + vt)
       setState(() {
         yAxis = initialHeight - height;
       });
@@ -59,13 +60,59 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment(0, yAxis),
                 duration: Duration.zero,
                 color: Colors.blue,
-                child: Bird(),
+                child: const Bird(),
               ),
             ),
           ),
+          Container(
+            height: 16,
+            color: Colors.green,
+          ),
           Expanded(
             child: Container(
-              color: Colors.green,
+              color: Colors.brown,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'SCORE',
+                        style: TextStyle(
+                          color: Colors.white,
+                        
+                        ),
+                      ),
+                      Text(
+                        '0',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                        ),
+                      )
+                    ],
+                  ),
+                  Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'BEST',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                       Text(
+                        '0',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ],
