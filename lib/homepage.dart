@@ -11,13 +11,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double yAxis = 0;
+  static double yAxis = 0;
+  double time = 0;
+  double velocity = 0;
+  double height = 0;
+  double initialHeight = yAxis;
+  bool gameHasStarted = false;
 
   void jump() {
+    setState(() {
+      time = 0;
+      initialHeight = yAxis;
+    });
+  }
+
+  void startGame() {
+    gameHasStarted = true;
     Timer.periodic(Duration(milliseconds: 100), (timer) {
+      time += 0.05;
+      height = -4.9 * (time * time) + 2 * time; //derived from parabola (h = - gt^2 / 2 + vt)
       setState(() {
-        yAxis -= 0.1;
+        yAxis = initialHeight - height;
       });
+      if (yAxis > 1) {
+        timer.cancel();
+        gameHasStarted = false;
+      }
     });
   }
 
@@ -30,7 +49,11 @@ class _HomePageState extends State<HomePage> {
             flex: 2,
             child: GestureDetector(
               onTap: () {
-                jump();
+                if (gameHasStarted) {
+                  jump();
+                } else {
+                  startGame();
+                }
               },
               child: AnimatedContainer(
                 alignment: Alignment(0, yAxis),
